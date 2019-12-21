@@ -59,6 +59,9 @@ $ cargo run input.txt 1 12 2 2
 Position 0: 2890696
 ```
 
+See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d2p1/day2/src/main.rs).
+
+
 ## Part Two
 
 > "Good, the new computer seems to be working correctly! Keep it nearby during this mission - you'll probably use it again. Real Intcode computers support many more features than your new one, but we'll let you know what they are as you need them."
@@ -85,3 +88,4 @@ $ cargo run input.txt 19690720
      Running `target/debug/day2 input.txt 19690720`
 Result (100 * noun + verb): 8226
 ```
+See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d2p2/day2/src/main.rs).
