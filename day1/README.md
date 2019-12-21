@@ -30,6 +30,8 @@ $ cargo run input.txt
 ---> 3437969
 ```
 
+See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d1p1/day1/src/main.rs).
+
 ## Part Two
 
 > During the second Go / No Go poll, the Elf in charge of the Rocket Equation Double-Checker stops the launch sequence. Apparently, you forgot to include additional fuel for the fuel you just added.
@@ -50,3 +52,5 @@ $ cargo run input.txt
      Running `target/debug/day1 input.txt`
 ---> 5154075
 ```
+
+See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d1p2/day1/src/main.rs).
