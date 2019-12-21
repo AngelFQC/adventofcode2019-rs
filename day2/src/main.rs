@@ -9,7 +9,12 @@ fn split_in_instructions(line: &str) -> Vec<i32> {
         .collect()
 }
 
-fn do_instructions(instructions: &mut Vec<i32>) {
+fn do_instructions(instructions_str: &str, noun: i32, verb: i32) -> i32 {
+    let mut instructions: Vec<i32> = split_in_instructions(instructions_str);
+
+    instructions[1] = noun;
+    instructions[2] = verb;
+
     for i in 0..instructions.len() {
         if i != 0 && i % 4 != 0 {
             continue;
@@ -31,31 +36,43 @@ fn do_instructions(instructions: &mut Vec<i32>) {
             _ => panic!("opcode encountered: {}", opcode)
         }
     }
+
+    instructions[0]
+}
+
+fn find_noun_verb(instructions_str: &str, result_expected: i32) -> (i32, i32) {
+    for n in 1..99 {
+        for v in 1..99 {
+            let result = do_instructions(&instructions_str, n, v);
+
+            if result == result_expected {
+                let noun = n as i32;
+                let verb = v as i32;
+
+                return (noun, verb);
+            }
+        }
+    }
+
+    panic!("Fail")
 }
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     
     let filename = &args[1];
-    let position_a: usize = args[2].parse().unwrap();
-    let value_a: i32 = args[3].parse().unwrap();
-    let position_b: usize = args[4].parse().unwrap();
-    let value_b: i32 = args[5].parse().unwrap();
+    let expected_result: i32 = args[2].parse().unwrap();
 
     let content = match fs::read_to_string(filename) {
         Ok(content) => content,
         Err(error) => panic!("{}", error)
     };
 
-    let mut instructions = match content.lines().next() {
-        Some(line) => split_in_instructions(line),
-        None => panic!("No instructions in this intcode.")
+    let (noun, verb) = match content.lines().next() {
+        Some(line) => find_noun_verb(line, expected_result),
+        None => panic!("No instructions in intcode")
     };
+    let result = 100 * noun + verb;
 
-    instructions[position_a] = value_a;
-    instructions[position_b] = value_b;
-
-    do_instructions(&mut instructions);
-
-    println!("Position 0: {}", instructions[0]);
+    println!("Result (100 * noun + verb): {:?}", result);
 }
