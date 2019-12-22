@@ -88,4 +88,4 @@ $ cargo run input.txt 19690720
      Running `target/debug/day2 input.txt 19690720`
 Result (100 * noun + verb): 8226
 ```
-See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d2p2/day2/src/main.rs).
+See the implementation code [here](https://github.com/AngelFQC/adventofcode2019-rs/blob/d2p2.1/day2/src/main.rs).

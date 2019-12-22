@@ -77,3 +77,29 @@ fn main() {
 
     println!("Result (100 * noun + verb): {:?}", result);
 }
+
+#[test]
+fn doing_instructions() {
+    assert_eq!(
+        do_instructions("1,1,1,4,99,5,6,0,99", 1, 1),
+        30
+    );
+}
+
+#[test]
+fn finding_noun_verb() {
+    let content = match fs::read_to_string("input.txt") {
+        Ok(content) => content,
+        Err(error) => panic!("{}", error)
+    };
+
+    let line = match content.lines().next() {
+        Some(line) => line,
+        None => panic!("No instructions line"),
+    };
+
+    assert_eq!(
+        find_noun_verb(&line, 2890696),
+        (12, 2)
+    )
+}
