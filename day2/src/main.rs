@@ -1,4 +1,5 @@
 use std::{env, fs};
+use std::ops::Add;
 
 fn split_in_instructions(line: &str) -> Vec<i32> {
     let parts: Vec<&str> = line.split(",").collect();
@@ -15,7 +16,7 @@ fn do_instructions(instructions_str: &str, noun: i32, verb: i32) -> i32 {
     instructions[1] = noun;
     instructions[2] = verb;
 
-    for i in 0..instructions.len() {
+    for i in 0..instructions.len() - 1 {
         if i != 0 && i % 4 != 0 {
             continue;
         }
