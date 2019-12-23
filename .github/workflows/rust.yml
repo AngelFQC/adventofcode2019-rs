@@ -14,4 +14,6 @@ jobs:
         cd day1
         cargo build --verbose
     - name: Run tests Day 1
-      run: cargo test --verbose
+      run: |
+        cd day1
+        cargo test --verbose
