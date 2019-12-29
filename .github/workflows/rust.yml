@@ -1,0 +1,35 @@
+name: Rust
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: "Day 1: Build"
+      run: |
+        cd day1
+        cargo build --verbose
+    - name: "Day 1: Run tests"
+      run: |
+        cd day1
+        cargo test --verbose
+    - name: "Day 2: Build"
+      run: |
+        cd day2
+        cargo build --verbose
+    - name: "Day 2: Run tests"
+      run: |
+        cd day2
+        cargo test --verbose
+    - name: "Day 3: Build"
+      run: |
+        cd day3
+        cargo build --verbose
+    - name: "Day 3: Run tests"
+      run: |
+        cd day3
+        cargo test --verbose
