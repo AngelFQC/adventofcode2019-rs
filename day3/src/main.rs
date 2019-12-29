@@ -32,18 +32,19 @@ fn get_points(instructions: Vec<&str>) -> Vec<(i32, i32)> {
     points
 }
 
-fn compare_points(points_a: Vec<(i32, i32)>, points_b: Vec<(i32, i32)>) -> Vec<(i32, i32)> {
+fn get_crossing_points(points_a: &Vec<(i32, i32)>, points_b: &Vec<(i32, i32)>) -> Vec<(i32, i32)> {
     let mut comparison = Vec::new();
 
     for point_a in points_a {
         if points_b.contains(&point_a) {
-            comparison.push(point_a);
+            comparison.push(*point_a);
         };
     }
 
     comparison
 }
 
+#[allow(dead_code)]
 fn find_closest(comparison: Vec<(i32, i32)>) -> (i32, i32) {
     let mut closest = comparison[0];
     let mut distance = (closest.0).abs() + (closest.1).abs();
@@ -59,8 +60,44 @@ fn find_closest(comparison: Vec<(i32, i32)>) -> (i32, i32) {
     closest
 }
 
+#[allow(dead_code)]
 fn get_distance(closest: (i32, i32)) -> i32 {
     closest.0.abs() + closest.1.abs()
+}
+
+fn get_steps_to_reach_point(point: (i32, i32), wire_points: &Vec<(i32, i32)>) -> i32 {
+    let mut iter = wire_points.split(|p| p.0 == point.0 && p.1 == point.1);
+
+    let steps = match iter.next() {
+        Some(steps) => steps,
+        None => panic!("No steps in points"),
+    };
+
+    steps.len() as i32 + 1
+}
+
+fn get_best_steps(
+    comparison: Vec<(i32, i32)>,
+    wire_points_a: Vec<(i32, i32)>,
+    wire_points_b: Vec<(i32, i32)>,
+) -> i32 {
+    let mut totals = Vec::new();
+
+    for point in comparison {
+        let distance_a = get_steps_to_reach_point(point, &wire_points_a);
+        let distance_b = get_steps_to_reach_point(point, &wire_points_b);
+
+        totals.push(distance_a + distance_b);
+    }
+
+    totals.sort();
+
+    let better = match totals.get(0) {
+        Some(first) => first,
+        None => panic!("First better intersection not found."),
+    };
+
+    *better
 }
 
 fn main() {
@@ -82,13 +119,11 @@ fn main() {
     let points_a = get_points(get_instructions(line_a_str));
     let points_b = get_points(get_instructions(line_b_str));
 
-    let comparison = compare_points(points_a, points_b);
+    let comparison = get_crossing_points(&points_a, &points_b);
 
-    let closest = find_closest(comparison);
+    let better = get_best_steps(comparison, points_a, points_b);
 
-    let distance = get_distance(closest);
-
-    println!("Manhattan distance: {}", distance);
+    println!("Fewest combined steps is: {}", better);
 }
 
 #[cfg(test)]
